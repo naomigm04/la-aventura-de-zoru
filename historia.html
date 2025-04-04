@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Aventura de Zoru - Historia</title>
+    <style>
+        :root {
+            --primary-color: #FF6B35;
+            --secondary-color: #004E89;
+            --accent-color: #FFD166;
+            --dark-color: #2D3047;
+            --light-color: #F7F7F7;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f1e6;
+            background-image: url('img/parchment-texture-light.jpg');
+            background-attachment: fixed;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        header img {
+            height: 80px;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s;
+        }
+        
+        header img:hover {
+            transform: scale(1.05);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0;
+        }
+        
+        nav li {
+            margin: 0 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+        
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        h1, h2 {
+            color: var(--secondary-color);
+            font-family: Arial, sans-serif;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 1rem;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .story-section {
+            margin-bottom: 3rem;
+            background-color: rgba(255, 253, 245, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #d4c9a8;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .story-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .reverse {
+            flex-direction: row-reverse;
+        }
+        
+        .story-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .story-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .story-text {
+            flex: 1;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .story-content, .reverse {
+                flex-direction: column;
+            }
+            
+            .story-image {
+                width: 100%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="Logo La Aventura de Zoru">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="historia.html" class="active">Historia</a></li>
+                <li><a href="personajes.html">Personajes</a></li>
+                <li><a href="mecanica.html">Mecánica</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>La Odisea de Zoru</h1>
+        
+        <section class="story-section">
+            <h2>La Partida del Guerrero</h2>
+            <div class="story-content">
+                <img src="img/bosque.png" alt="Zoru partiendo al bosque" class="story-image">
+                <div class="story-text">
+                    <p>Desde el tranquilo pueblo de Riven, rodeado por el Bosque Eterno, Zoru emprendió su viaje. Los ancianos lo eligieron no por fama, sino por ser el único capaz de navegar los peligrosos senderos del bosque donde otros se perdían. Su primera prueba fue cruzar este laberinto viviente, donde los árboles susurraban advertencias y las sombras parecían seguirlo.</p>
+                    <p>Con solo su espada y determinación, Zoru partió al amanecer, sabiendo que al otro lado del bosque lo esperaban desafíos mayores. El bosque no era solo un camino, sino el primer guardián que probaría su valía.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="story-section">
+            <h2>Los Peligros de la Cueva Oscura</h2>
+            <div class="story-content reverse">
+                <img src="img/cueva.png" alt="Cueva de los Susurros" class="story-image">
+                <div class="story-text">
+                    <p>Tras días de viaje, Zoru llegó a la entrada de la Cueva de los Susurros, un lugar que incluso los más valientes de su pueblo evitaban. Aquí enfrentó a Sapo, el guardián retorcido que habitaba en sus profundidades. La cueva era un desafío tanto físico como mental - cada paso adelante hacía que las paredes parecieran cerrarse a su alrededor, y los susurros intentaban convencerlo de abandonar su misión.</p>
+                    <p>En la oscuridad total, solo el débil resplandor de su espada lo guiaba. Fue aquí donde Zoru aprendió que su mayor arma no era el acero, sino su voluntad inquebrantable.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="story-section">
+            <h2>El Camino hacia la Torre Oscura</h2>
+            <div class="story-content">
+                <img src="img/finaldenivel.jpeg" alt="Camino a la Torre Oscura" class="story-image">
+                <div class="story-text">
+                    <p>Al salir de la cueva, Zoru se encontró en un paisaje desolado que conducía a la Torre de Cristal Negro. Este último tramo era el más peligroso, patrullado por los esbirros más leales de Darkar. Cada paso hacia la torre era una batalla, cada sombra podía esconder un enemigo.</p>
+                    <p>En la base de la torre, Zoru comprendió que su viaje solitario había sido necesario. Mientras los demás protegían sus hogares, solo un guerrero sin ataduras podía llegar hasta el corazón del mal. Con una última mirada al camino recorrido, preparó su espada para el enfrentamiento final.</p>
+                    <p>Esta es la historia de cómo un solo hombre, enfrentando cada obstáculo en solitario, se convirtió en la última esperanza de un reino al borde de la oscuridad.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 La Aventura de Zoru. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

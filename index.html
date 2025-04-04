@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Aventura de Zoru - Home</title>
+    <!-- Eliminadas las dependencias externas -->
+    <style>
+        :root {
+            --primary-color: #FF6B35;
+            --secondary-color: #004E89;
+            --accent-color: #FFD166;
+            --dark-color: #2D3047;
+            --light-color: #F7F7F7;
+        }
+        
+        body {
+            font-family: Arial, sans-serif; /* Fuente del sistema */
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        header img {
+            height: 80px;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s;
+        }
+        
+        header img:hover {
+            transform: scale(1.05);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0;
+        }
+        
+        nav li {
+            margin: 0 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('img/bosque.png') center/cover no-repeat;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+        }
+        
+        .hero h1 {
+            font-family: Arial, sans-serif; /* Fuente del sistema */
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 0 var(--dark-color);
+            color: var(--accent-color);
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 1rem 0 2rem;
+            text-shadow: 1px 1px 2px var(--dark-color);
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        #installBtn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        #installBtn:hover {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        .esrb-rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background-color: white;
+        }
+        
+        .esrb-rating img {
+            height: 80px;
+            margin-right: 1.5rem;
+        }
+        
+        .esrb-rating p {
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 400px;
+        }
+        
+        .latest-news {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .latest-news h2 {
+            font-family: Arial, sans-serif; /* Fuente del sistema */
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .latest-news h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .esrb-rating {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .esrb-rating img {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="Logo La Aventura de Zoru">
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="personajes.html">Personajes</a></li>
+                <li><a href="mecanica.html">Mecánica</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>La Aventura de Zoru</h1>
+            <p>Embárcate en una épica aventura llena de misterios y desafíos junto a Zoru, el zorro guerrero</p>
+            <button id="installBtn">Instalar Juego</button>
+        </section>
+        
+        <section class="esrb-rating">
+            <img src="img/ESRB.png" alt="Clasificación ESRB E (Para todos)">
+            <p>Clasificación ESRB: E (Para todos) - Fantasía con violencia leve. Contiene temática de aventura y desafíos de habilidad.</p>
+        </section>
+        
+        <section class="latest-news">
+            <h2>Últimas Noticias</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="img/cueva.png" alt="Nueva cueva descubierta">
+                    <h3>Nueva Actualización 1.2</h3>
+                    <p>Descubre la misteriosa Cueva de los Susurros en la última actualización del juego.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 La Aventura de Zoru. Todos los derechos reservados.</p>
+    </footer>
+    
+    <script>
+        // Efecto de desplazamiento suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Instalación PWA
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+        
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBtn.textContent = '¡Instalado!';
+                    installBtn.style.backgroundColor = '#4CAF50';
+                }
+                deferredPrompt = null;
+            }
+        });
+        
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado con éxito:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Error al registrar el ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

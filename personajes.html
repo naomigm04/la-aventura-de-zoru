@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Aventura de Zoru - Personajes</title>
+    <style>
+        :root {
+            --primary-color: #FF6B35;
+            --secondary-color: #004E89;
+            --accent-color: #FFD166;
+            --dark-color: #2D3047;
+            --light-color: #F7F7F7;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        header img {
+            height: 80px;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s;
+        }
+        
+        header img:hover {
+            transform: scale(1.05);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0;
+        }
+        
+        nav li {
+            margin: 0 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--secondary-color);
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+        
+        /* Grid de personajes */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+        }
+        
+        .character {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .character:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .character-img-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .character img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .character:hover img {
+            transform: scale(1.05);
+        }
+        
+        .character-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .character h3 {
+            margin: 0 0 10px 0;
+            color: var(--dark-color);
+            font-size: 1.4rem;
+        }
+        
+        .character p {
+            margin: 0;
+            color: #666;
+            flex-grow: 1;
+        }
+        
+        /* Estilos para villanos */
+        .villain {
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .villain h3 {
+            color: var(--primary-color);
+        }
+        
+        /* Estilos para héroes */
+        .hero {
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .hero h3 {
+            color: var(--secondary-color);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 10px;
+            width: 85%;
+            max-width: 700px;
+            position: relative;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            animation: modalopen 0.4s;
+        }
+        
+        @keyframes modalopen {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 15px;
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        .close:hover {
+            background: rgba(0,0,0,0.8);
+            transform: rotate(90deg);
+        }
+        
+        .modal-header {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .modal-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        }
+        
+        .modal-title {
+            position: absolute;
+            bottom: 20px;
+            left: 30px;
+            color: white;
+            z-index: 2;
+            margin: 0;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .modal-section {
+            margin-bottom: 20px;
+        }
+        
+        .modal-section h3 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+        
+        .abilities-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .ability-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ability-item::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .hero-ability .ability-item::before {
+            color: var(--secondary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 900px) {
+            .character-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .modal-content {
+                width: 95%;
+                margin: 2% auto;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .abilities-list {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="Logo La Aventura de Zoru">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="personajes.html" class="active">Personajes</a></li>
+                <li><a href="mecanica.html">Mecánica</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Personajes Principales</h1>
+        
+        <section class="character-grid">
+            <!-- Héroe -->
+            <article class="character hero" data-character="zoru">
+                <div class="character-img-container">
+                    <img src="img/zoru.png" alt="Zoru - El héroe">
+                </div>
+                <div class="character-info">
+                    <h3>Zoru</h3>
+                    <p>El valiente protagonista de nuestra historia, un joven con poderes especiales que debe salvar su reino.</p>
+                </div>
+            </article>
+            
+            <!-- Villanos -->
+            <article class="character villain" data-character="darkar">
+                <div class="character-img-container">
+                    <img src="img/finalboss.jpeg" alt="Darkar - El villano principal">
+                </div>
+                <div class="character-info">
+                    <h3>Darkar</h3>
+                    <p>El temible señor oscuro que amenaza con sumir el mundo en la eterna oscuridad.</p>
+                </div>
+            </article>
+            
+            <article class="character villain" data-character="sapo">
+                <div class="character-img-container">
+                    <img src="img/sapo.jpeg" alt="Sapo - Villano secundario">
+                </div>
+                <div class="character-info">
+                    <h3>Sapo</h3>
+                    <p>Un esbirro de Darkar, maestro del engaño y la manipulación.</p>
+                </div>
+            </article>
+            
+            <article class="character villain" data-character="aguila">
+                <div class="character-img-container">
+                    <img src="img/aguila.jpeg" alt="Águila - Villano secundario">
+                </div>
+                <div class="character-info">
+                    <h3>Águila</h3>
+                    <p>Un mercenario despiadado que trabaja para el mejor postor.</p>
+                </div>
+            </article>
+            
+            <article class="character villain" data-character="zariguella">
+                <div class="character-img-container">
+                    <img src="img/zariguella.jpeg" alt="Zariguella - Villano secundario">
+                </div>
+                <div class="character-info">
+                    <h3>Zariguella</h3>
+                    <p>Una astuta ladrona que roba para Darkar artefactos poderosos.</p>
+                </div>
+            </article>
+            
+            <article class="character villain" data-character="finalboss">
+                <div class="character-img-container">
+                    <img src="img/finalboss.jpeg" alt="Señor de la Oscuridad">
+                </div>
+                <div class="character-info">
+                    <h3>Señor de la Oscuridad</h3>
+                    <p>La encarnación del mal que controla a Darkar desde las sombras.</p>
+                </div>
+            </article>
+        </section>
+    </main>
+    
+    <!-- Modal -->
+    <div id="characterModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <img id="modalCharacterImage" src="" alt="">
+                <h2 id="modalCharacterName" class="modal-title"></h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <p id="modalCharacterDescription"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Historia</h3>
+                    <p id="modalCharacterHistory"></p>
+                </div>
+                <div class="modal-section" id="abilitiesSection">
+                    <h3>Habilidades</h3>
+                    <div class="abilities-list" id="modalCharacterAbilities"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 La Aventura de Zoru. Todos los derechos reservados.</p>
+    </footer>
+    
+    <script>
+        // Datos de los personajes
+        const charactersData = {
+            zoru: {
+                name: "Zoru",
+                image: "img/zoru.png",
+                description: "El valiente protagonista de nuestra historia, un joven con poderes especiales que debe salvar su reino.",
+                fullDescription: "Zoru es un joven huérfano criado en las afueras del Reino de Eldoria. Descubre a los 16 años que posee el poder ancestral de los Guardianes de la Luz, lo que lo convierte en la única esperanza para derrotar a las fuerzas de la oscuridad. Aunque al principio duda de sus habilidades, con el tiempo aprende a dominar sus poderes con la ayuda de antiguos mentores.",
+                abilities: ["Control elemental", "Telepatía limitada", "Resistencia sobrehumana", "Valentía inquebrantable", "Liderazgo innato", "Habilidad con la espada"],
+                role: "Protagonista / Héroe",
+                type: "hero"
+            },
+            darkar: {
+                name: "Darkar",
+                image: "img/finalboss.jpeg",
+                description: "El temible señor oscuro que amenaza con sumir el mundo en la eterna oscuridad.",
+                fullDescription: "Darkar, antiguo discípulo de los Guardianes de la Luz, sucumbió a la corrupción del poder oscuro. Ahora lidera un ejército de criaturas malignas con el objetivo de sumir al mundo en la eterna oscuridad. Su sed de venganza contra quienes lo desterraron no conoce límites.",
+                abilities: ["Manipulación de sombras", "Invocación de criaturas", "Inmortalidad parcial", "Control mental", "Estrategia militar", "Poderes oscuros"],
+                role: "Villano principal",
+                type: "villain"
+            },
+            sapo: {
+                name: "Sapo",
+                image: "img/sapo.jpeg",
+                description: "Un esbirro de Darkar, maestro del engaño y la manipulación.",
+                fullDescription: "Sapo, un ser repulsivo pero extremadamente inteligente, sirve como consejero de Darkar. Sus planes retorcidos y su habilidad para manipular a otros lo convierten en un enemigo peligroso, a pesar de su apariencia débil.",
+                abilities: ["Manipulación psicológica", "Veneno paralizante", "Camuflaje en pantanos", "Estratega brillante", "Infiltración", "Lenguas antiguas"],
+                role: "Villano secundario",
+                type: "villain"
+            },
+            aguila: {
+                name: "Águila",
+                image: "img/aguila.jpeg",
+                description: "Un mercenario despiadado que trabaja para el mejor postor.",
+                fullDescription: "Águila es un guerrero sin escrúpulos que solo lucha por el mejor postor. Su habilidad con la espada y su visión aguda lo convierten en un oponente formidable. Actualmente trabaja para Darkar, pero su lealtad es cuestionable.",
+                abilities: ["Combate aéreo", "Precisión letal", "Velocidad sobrehumana", "Sentidos agudizados", "Tácticas de combate", "Armas de largo alcance"],
+                role: "Villano secundario",
+                type: "villain"
+            },
+            zariguella: {
+                name: "Zariguella",
+                image: "img/zariguella.jpeg",
+                description: "Una astuta ladrona que roba para Darkar artefactos poderosos.",
+                fullDescription: "Zariguella es una especialista en infiltrarse y robar artefactos poderosos para Darkar. Su pequeño tamaño y agilidad la hacen casi imposible de atrapar. Aunque no es una combatiente poderosa, su habilidad para el sigilo es incomparable.",
+                abilities: ["Sigilo absoluto", "Apertura de cerraduras", "Escalada experta", "Robo de objetos", "Escapismo", "Falsificación"],
+                role: "Villano secundario",
+                type: "villain"
+            },
+            finalboss: {
+                name: "Señor de la Oscuridad",
+                image: "img/finalboss.jpeg",
+                description: "La encarnación del mal que controla a Darkar desde las sombras.",
+                fullDescription: "El ser ancestral que controla a Darkar desde las sombras. Nadie conoce su verdadera forma, pero su poder es incalculable. Es la fuente de toda la corrupción en el reino y el verdadero antagonista de la historia.",
+                abilities: ["Control absoluto de la oscuridad", "Manipulación de la realidad", "Inmortalidad", "Corrupción de almas", "Creación de pesadillas", "Dominación mental"],
+                role: "Villano final",
+                type: "villain"
+            }
+        };
+        
+        // Elementos del DOM
+        const modal = document.getElementById("characterModal");
+        const closeBtn = document.querySelector(".close");
+        const characters = document.querySelectorAll(".character");
+        
+        // Elementos del modal
+        const modalCharacterName = document.getElementById("modalCharacterName");
+        const modalCharacterImage = document.getElementById("modalCharacterImage");
+        const modalCharacterDescription = document.getElementById("modalCharacterDescription");
+        const modalCharacterHistory = document.getElementById("modalCharacterHistory");
+        const modalCharacterAbilities = document.getElementById("modalCharacterAbilities");
+        const abilitiesSection = document.getElementById("abilitiesSection");
+        
+        // Función para abrir el modal
+        function openModal(characterId) {
+            const character = charactersData[characterId];
+            
+            if (character) {
+                // Configurar el contenido del modal
+                modalCharacterName.textContent = character.name;
+                modalCharacterImage.src = character.image;
+                modalCharacterImage.alt = character.name;
+                modalCharacterDescription.textContent = character.description;
+                modalCharacterHistory.textContent = character.fullDescription;
+                
+                // Limpiar habilidades anteriores
+                modalCharacterAbilities.innerHTML = "";
+                
+                // Añadir habilidades
+                character.abilities.forEach(ability => {
+                    const abilityItem = document.createElement("div");
+                    abilityItem.className = "ability-item";
+                    abilityItem.textContent = ability;
+                    modalCharacterAbilities.appendChild(abilityItem);
+                });
+                
+                // Cambiar estilo según tipo de personaje
+                if (character.type === "hero") {
+                    abilitiesSection.className = "modal-section hero-ability";
+                } else {
+                    abilitiesSection.className = "modal-section";
+                }
+                
+                // Mostrar modal
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden";
+            }
+        }
+        
+        // Función para cerrar el modal
+        function closeModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+        
+        // Event listeners
+        characters.forEach(character => {
+            character.addEventListener("click", () => {
+                const characterId = character.getAttribute("data-character");
+                openModal(characterId);
+            });
+        });
+        
+        closeBtn.addEventListener("click", closeModal);
+        
+        // Cerrar al hacer clic fuera del modal
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Cerrar con la tecla ESC
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

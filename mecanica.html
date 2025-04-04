@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Aventura de Zoru - Mecánica</title>
+    <style>
+        :root {
+            --primary-color: #FF6B35;
+            --secondary-color: #004E89;
+            --accent-color: #FFD166;
+            --dark-color: #2D3047;
+            --light-color: #F7F7F7;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        header img {
+            height: 80px;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s;
+        }
+        
+        header img:hover {
+            transform: scale(1.05);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0;
+        }
+        
+        nav li {
+            margin: 0 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+        
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary-color);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+            border-radius: 2px;
+        }
+        
+        h2 {
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 2.5rem;
+            font-size: 2rem;
+        }
+        
+        /* Sección de controles */
+        .controls-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 1rem;
+        }
+        
+        .control-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary-color);
+            transition: transform 0.3s;
+        }
+        
+        .control-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .control-item h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+        
+        /* Sección de items */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 1.5rem;
+        }
+        
+        .item-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--accent-color);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .item-img-container {
+            height: 150px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+        
+        .item-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+        
+        .item-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .item-info {
+            padding: 1.2rem;
+        }
+        
+        .item-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.3rem;
+        }
+        
+        .item-card p {
+            margin: 0;
+            color: #555;
+        }
+        
+        /* Sección de obstáculos */
+        .obstacle-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-top: 1.5rem;
+            overflow: hidden;
+            border-top: 4px solid var(--primary-color);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .obstacle-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f8f9fa;
+        }
+        
+        .obstacle-img {
+            width: 80px;
+            height: 80px;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .obstacle-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .obstacle-body {
+            padding: 1.2rem;
+        }
+        
+        .obstacle-body ul {
+            padding-left: 20px;
+        }
+        
+        .obstacle-body li {
+            margin-bottom: 8px;
+        }
+        
+        /* Consejos */
+        .tips-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--secondary-color);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .tips-section ul {
+            padding-left: 20px;
+        }
+        
+        .tips-section li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .tips-section li::before {
+            content: "★";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .obstacle-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .obstacle-img {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="Logo La Aventura de Zoru">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="personajes.html">Personajes</a></li>
+                <li><a href="mecanica.html" class="active">Mecánica</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Mecánica del Juego</h1>
+        
+        <section class="controls-section">
+            <h2>Controles</h2>
+            <div class="controls-grid">
+                <div class="control-item">
+                    <h3>Movimiento</h3>
+                    <p>Teclas WASD o Flechas direccionales</p>
+                </div>
+                <div class="control-item">
+                    <h3>Saltar</h3>
+                    <p>Barra espaciadora</p>
+                </div>
+                <div class="control-item">
+                    <h3>Interactuar</h3>
+                    <p>Tecla E</p>
+                </div>
+                <div class="control-item">
+                    <h3>Ataque básico</h3>
+                    <p>Click izquierdo del mouse</p>
+                </div>
+                <div class="control-item">
+                    <h3>Habilidad especial</h3>
+                    <p>Tecla Q</p>
+                </div>
+                <div class="control-item">
+                    <h3>Menú</h3>
+                    <p>Tecla ESC</p>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Items Especiales</h2>
+            <div class="items-grid">
+                <!-- Corazón de Vida -->
+                <div class="item-card">
+                    <div class="item-img-container">
+                        <img src="img/vida.jpeg" alt="Corazón de Vida">
+                    </div>
+                    <div class="item-info">
+                        <h3>Corazón de Vida</h3>
+                        <p>Restaura 1 punto de salud al instante. Vital para sobrevivir en combates difíciles.</p>
+                    </div>
+                </div>
+                
+                <!-- Gemas -->
+                <div class="item-card">
+                    <div class="item-img-container">
+                        <img src="img/gema.jpeg" alt="Gemas Arcanas">
+                    </div>
+                    <div class="item-info">
+                        <h3>Gemas Arcanas</h3>
+                        <p>Colecciona 5 gemas para desbloquear una habilidad temporal. Se esconden en lugares secretos.</p>
+                    </div>
+                </div>
+                
+                <!-- Punto de Control -->
+                <div class="item-card">
+                    <div class="item-img-container">
+                        <img src="img/cp.jpeg" alt="Punto de Control">
+                    </div>
+                    <div class="item-info">
+                        <h3>Punto de Control (CP)</h3>
+                        <p>Guarda tu progreso. Al morir, reaparecerás en el último CP activado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Obstáculos Peligrosos</h2>
+            <div class="obstacle-card">
+                <div class="obstacle-header">
+                    <div class="obstacle-img">
+                        <img src="img/picos.jpeg" alt="Picos mortales">
+                    </div>
+                    <div>
+                        <h3 style="margin:0;">Picos Mortales</h3>
+                        <p style="margin:5px 0 0; color:#666;">Obstáculo que inflige daño al contacto</p>
+                    </div>
+                </div>
+                <div class="obstacle-body">
+                    <p>Los picos son peligrosas trampas que aparecen en zonas estratégicas del mapa:</p>
+                    <ul>
+                        <li>Al tocarlos, Zoru pierde <strong>1 punto de vida</strong> inmediatamente</li>
+                        <li>Si caes sobre ellos desde altura, el daño aumenta a <strong>2 puntos</strong></li>
+                        <li>Algunos picos son móviles y siguen patrones de movimiento</li>
+                        <li>Se pueden destruir con ciertas habilidades especiales</li>
+                    </ul>
+                    <p><strong>Consejo:</strong> Observa cuidadosamente los patrones de movimiento antes de avanzar.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="tips-section">
+            <h2>Consejos de Juego</h2>
+            <ul>
+                <li>Activa los <strong>Puntos de Control (CP)</strong> tan pronto como los veas</li>
+                <li>Colecciona <strong>Gemas</strong> para acceder a habilidades poderosas</li>
+                <li>Usa los <strong>Corazones de Vida</strong> estratégicamente en combates difíciles</li>
+                <li>Memoriza la ubicación de los <strong>picos</strong> para pasarlos con seguridad</li>
+                <li>Explora cada área completamente para encontrar secretos y atajos</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 La Aventura de Zoru. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
